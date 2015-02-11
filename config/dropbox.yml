@@ -1,0 +1,8 @@
+app_key: "uga855ttwf0zyov"
+app_secret: <%=ENV["APP_SECRET"] %>
+access_token: "mt7rcsw6fvofcbcv"
+access_token_secret: <%=ENV["ACCESS_TOKEN_SECRET"] %>
+user_id: "74655865"
+access_type: "app_folder"
+#rake dropbox:authorize APP_KEY=uga855ttwf0zyov APP_SECRET=oe12k256b3c2d8n ACCESS_TYPE=app_folder
+

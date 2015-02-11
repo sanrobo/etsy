@@ -1,0 +1,9 @@
+@import "bootstrap";
+body {
+	background-color: #f5f5f1;
+	color: #333333;
+}
+
+.col-md-4:nth-child(3n+1){
+	clear:left;
+}

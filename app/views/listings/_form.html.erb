@@ -1,0 +1,29 @@
+<%= form_for(@listing , :html => { :multipart => true}) do |f| %>
+  <% if @listing.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@listing.errors.count, "error") %> prohibited this listing from being saved:</h2>
+
+      <ul>
+      <% @listing.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.text_field :name ,class:"form-control", placeholder:"Title is here"%>
+  </div>
+  <div class="form-group">
+    <%= f.text_area :description,class:"form-control", placeholder:"Description" %>
+  </div>
+  <div class="form-group">
+    <%= f.text_field :price,class:"form-control", placeholder:"Price" %>
+  </div>
+  <div class="form-group">
+    <%= f.file_field :image,class:"form-control", placeholder:"Price" %>
+  </div>
+  <div class="form-group">
+    <%= f.submit class:"btn btn-default"%>
+  </div>
+<% end %>

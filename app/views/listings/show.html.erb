@@ -1,0 +1,17 @@
+<p id="notice"><%= notice %></p>
+
+ <div class="col-md-4">
+   <div class="thumbnail">
+      <%= image_tag @listing.image.url(:medium) %>
+      <div class="caption">
+        <h3><%= @listing.name %> | <%= number_to_currency(@listing.price) %> </h3>
+        <p> <%= @listing.description %></p>
+        <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+        <%= link_to 'Edit', edit_listing_path(@listing),class:"btn btn-link" %> <br/>
+        <%= link_to 'Destroy', @listing, method: :delete, data: { confirm: 'Are you sure?' },class:"btn btn-link"%></p>
+      </div>
+    </div>
+   </div>
+
+<%= link_to 'Edit', edit_listing_path(@listing) %> |
+<%= link_to 'Back', listings_path %>
