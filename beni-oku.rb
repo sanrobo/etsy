@@ -117,4 +117,11 @@ config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 rails generate devise:views
 rails generate devise User
 rake db:migrate
-#yorum ekle
+
+#link_to helper ve Çıkış linki eklemek
+<%=link_to "Sign Out",destroy_user_session_path,method: :delete%>
+
+#Conditional linkler eklemek, header.html.erb içine
+<%if user_signed_in?%>
+
+#Devise için helper oluşturma,app/helper/devise_helper.rb => dosya içine yazılır
