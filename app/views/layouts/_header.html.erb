@@ -45,6 +45,7 @@
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Hesap <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
           <%if user_signed_in?%>
+          <li> <%=current_user.name+" "+current_user.surname %> </li>
             <li>
               <%=link_to "Sign Out",destroy_user_session_path,method: :delete%>
             </li>

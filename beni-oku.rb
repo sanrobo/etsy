@@ -123,5 +123,22 @@ rake db:migrate
 
 #Conditional linkler eklemek, header.html.erb içine
 <%if user_signed_in?%>
+#Kullanıcı kim
+current_user.name
 
 #Devise için helper oluşturma,app/helper/devise_helper.rb => dosya içine yazılır
+
+#Devise tablosuna isim ve soyisim eklemek
+rails generate migration AddNameToUsers name:string
+rails generate migration AddSurnameToUsers surname:string
+rake db:migrate
+#app/controllers/concerns/application_controller.rb dosyasına strong parametreler ekliyoruz
+	  before_action :configure_permitted_parameters, if: :devise_controller?
+	  protected
+	  def configure_permitted_parameters
+	    devise_parameter_sanitizer.for(:sign_up) << :name
+	    devise_parameter_sanitizer.for(:account_update) << :name
+	    devise_parameter_sanitizer.for(:sign_up) << :surname
+	    devise_parameter_sanitizer.for(:account_update) << :surname
+	  end
+#Views değişiklikleri, views/devise/registrations/*.erb içine name,surname alanları ilave ediyoruz
