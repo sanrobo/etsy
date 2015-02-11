@@ -142,3 +142,9 @@ rake db:migrate
 	    devise_parameter_sanitizer.for(:account_update) << :surname
 	  end
 #Views değişiklikleri, views/devise/registrations/*.erb içine name,surname alanları ilave ediyoruz
+
+#Devise ayarları 
+	app/config/initializers/devise.rb 
+
+#Validates Syntax
+validates :alan(lar), options: {value}
