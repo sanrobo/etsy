@@ -148,3 +148,15 @@ rake db:migrate
 
 #Validates Syntax
 validates :alan(lar), options: {value}
+
+#Listing'i User ile ilişkilendirme
+rails generate migration AddUserIdToListing user_id:integer
+rake db:migrate
+#app/models/listing.rb
+ belongs_to :user
+#app/models/user.rb
+ has_many :listings, dependent: :destroy  #s çoğul ifadesine dikkat
+ #app/controller/listings_controller.rb create methodu içinde listing user'ını belirt
+     @listing.user_id=current_user.id
+     #listing.user.name şeklinde erişim yapılabilir
+
