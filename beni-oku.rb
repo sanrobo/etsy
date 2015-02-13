@@ -159,4 +159,18 @@ rake db:migrate
  #app/controller/listings_controller.rb create methodu içinde listing user'ını belirt
      @listing.user_id=current_user.id
      #listing.user.name şeklinde erişim yapılabilir
+#Kullanıcı denetimi app/controllers/listing_controller içinde
+  before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
+  before_filter :check_user, only: [:edit, :update, :destroy] 
+  #Yukarıdaki :check_user 'a binaen şu methodu en aşağıya ilave et
+    def check_user
+      if current_user!=@listing.user
+        redirect_to root_url, alert: "Geçerli kullanıcı değilsiniz"
+      end
+    end
+ #Son olarak View içinde if ile link denetimi yapmak
+ 	<% if(user_signed_in?) && (current_user==listing.user)%>
+#Resme link vermek
+      <%= image_tag listing.image.url(:thumb) %>
+      <%=link_to image_tag(listing.image.url(:thumb)),listing%>
 

@@ -3,14 +3,14 @@
  <% @listings.each do |listing| %>
    <div class="col-md-4">
    <div class="thumbnail">
-      <%= image_tag listing.image.url(:thumb) %>
+      <%=link_to image_tag(listing.image.url(:thumb)),listing%>
       <div class="caption">
         <h3><%= listing.name %> | <%= number_to_currency(listing.price) %> | <%=listing.user.name%> </h3>
         <p> <%= listing.description %></p>
-        <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
-        <p><%= link_to 'Show',listing ,class:"btn btn-link" %> <br/>
-        <%= link_to 'Edit', edit_listing_path(listing),class:"btn btn-link" %> <br/>
-        <%= link_to 'Destroy', listing, method: :delete, data: { confirm: 'Are you sure?' },class:"btn btn-link"%></p>
+        <% if(user_signed_in?) && (current_user==listing.user)%>
+        <%= link_to 'Edit', edit_listing_path(listing),class:"btn btn-primary" %> |
+        <%= link_to 'Destroy', listing, method: :delete, data: { confirm: 'Are you sure?' },class:"btn btn-danger"%></p>
+        <%end%>
       </div>
     </div>
    </div>
