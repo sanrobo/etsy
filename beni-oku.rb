@@ -149,7 +149,8 @@ rake db:migrate
 #Validates Syntax
 validates :alan(lar), options: {value}
 
-#Listing'i User ile ilişkilendirme
+#########################################################################################
+#LISTING İLE USER İKİŞKİSİ KURMA
 rails generate migration AddUserIdToListing user_id:integer
 rake db:migrate
 #app/models/listing.rb
@@ -160,7 +161,7 @@ rake db:migrate
      @listing.user_id=current_user.id
      #listing.user.name şeklinde erişim yapılabilir
 #Kullanıcı denetimi app/controllers/listing_controller içinde
-  before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
+  before_filter :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
   before_filter :check_user, only: [:edit, :update, :destroy] 
   #Yukarıdaki :check_user 'a binaen şu methodu en aşağıya ilave et
     def check_user
@@ -173,4 +174,16 @@ rake db:migrate
 #Resme link vermek
       <%= image_tag listing.image.url(:thumb) %>
       <%=link_to image_tag(listing.image.url(:thumb)),listing%>
+
+
+#####################################################################
+#SELLER PAGE OLUŞTURMA
+#Yeni bir route oluşturmak
+	get 'seller' => 'listings#seller'
+#app/controller/listing_controller içinde seller methodu oluştur
+  def seller
+    @listings=Listing.where(user: current_user).order("created_at DESC")
+  end #before_filter seçeneklerine bu methodu eklemeyi unutma sonra view'ını oluştur
+
+
 
