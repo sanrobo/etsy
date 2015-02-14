@@ -185,5 +185,40 @@ rake db:migrate
     @listings=Listing.where(user: current_user).order("created_at DESC")
   end #before_filter seçeneklerine bu methodu eklemeyi unutma sonra view'ını oluştur
 
+########################################################################
+#ORDER Oluşturma
+rails generate scaffold Order address:string city:string state:string
+rails generate migration AddListingIdToOrders listing_id:integer
 
+rake db:migrate
 
+#app/model/listing.rb içinde ilişki tanımla
+  has_many :orders
+#app/model/order.rb içinde ilişki tanımla
+ belongs_to :listing
+#app/model/order.rb içinde ilişki
+	belongs_to :buyer, class_name: "User"
+	belongs_to :seller, class_name: "User"
+#app/model/user.rb içinde ilişki tanımla
+  has_many :sales, class_name: "Order",foreign_key: "seller_id"
+  has_many :purchases, class_name: "Order", foreign_key: "buyer_id"
+
+rails generate migration AddFieldsToOrders buyer_id:integer seller_id:integer
+#app/controller/order_controller.rb içinde kullanıcı authenticate_user! tanımla ve buyer_id, seller_id tanımla
+    @order.buyer_id=current_user.id #create methodu içinde
+#routes.rb içinde listings/id/order/new şeklinde sipariş için değişiklik
+  resources :listings do
+    resources :orders
+  end
+ #order_controller içinde seller_id çekmemiz için listing parametresi lazım
+ 	@listing=Listing.find(params[:listing_id]) #create ve new içine eklenmesi lazım
+    @seller=@listing.user   
+    @order.listing_id=@listing.id
+    @order.seller_id=@seller.id #form save'den sonra redirect root_url olarak değiştir
+
+#app/views/orders/new içinde link düzenlenmesi gerekiyor
+	<%= link_to 'Back', listing_orders_path %>
+#app/views/orders/_form.html.erb içinde form değişmeli (nested resources var çünkü)
+	<%= form_for([@listing,@order]) do |f| %>
+#app/views/listings/show içinde listinglere Buy It eklemek
+	<%= link_to 'Buy It', new_listing_order_path(@listing),class:"btn btn-primary" %>

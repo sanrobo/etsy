@@ -1,20 +1,31 @@
-<h1>Listing Listings</h1>
-<div class="row">
+<table class="table table-bordered">
+  <tr>
+   <th> Image</th>
+   <th> Name </th>
+   <th> Description</th>
+   <th> Price</th>
+   <th> Settings</th>
+  </tr>
  <% @listings.each do |listing| %>
-   <div class="col-md-4">
-   <div class="thumbnail">
-      <%=link_to image_tag(listing.image.url(:thumb)),listing%>
-      <div class="caption">
-        <h3><%= listing.name %> | <%= number_to_currency(listing.price) %> | <%=listing.user.name%> </h3>
-        <p> <%= listing.description %></p>
-        <% if(user_signed_in?) && (current_user==listing.user)%>
-        <%= link_to 'Edit', edit_listing_path(listing),class:"btn btn-primary" %> |
-        <%= link_to 'Destroy', listing, method: :delete, data: { confirm: 'Are you sure?' },class:"btn btn-danger"%></p>
-        <%end%>
+ <tr>
+   <td> <%=link_to image_tag(listing.image.url(:thumb)),listing%> </td>
+   <td> <%= listing.name %>  </td>
+   <td> <%= listing.description %> </td>
+   <td> <%= listing.price %> </td>
+   <td> 
+      <div class="btn-group">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+          Settings <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+          <li><%= link_to 'Edit', edit_listing_path(listing) %> </li>
+          <li><%= link_to 'Destroy', listing, method: :delete, data: { confirm: 'Are you sure?' }%></li>
+          <li><a href="#">Something else here</a></li>
+        </ul>
       </div>
-    </div>
-   </div>
- <% end %>
-</div>
+   </td>  
+ </tr>
+ <%end%>
+</table>
 
 <%= link_to 'New Listing', new_listing_path %>
